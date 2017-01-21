@@ -13,8 +13,19 @@ head(df)
 df[is.na(df)] <- 0
 
 #Extrair apenas os anos das datas (única parte importante desta variável para nosso trabalho)
-df$Date <- format(as.Date(df$Date, format="%m/%d/%Y"),"%Y")
+df$Date <- sapply(format(as.Date(df$Date, format="%m/%d/%Y"),"%Y"), as.numeric)
 
+#Histograma de acidentes por ano
+x <- df$Date
+h<-hist(x,
+     freq = F,
+     main="Histograma de Acidentes por Ano",
+     xlab="Anos",
+     ylab="Frequência",
+     col=c("lightblue"),
+     xlim=c(1908,2009),
+     breaks = 101)
+curve(dnorm(x, mean= mean(x), sd= sd(x)), add = TRUE, col="darkblue", lwd=2)
 
 
 
