@@ -1,4 +1,6 @@
-install.packages(lubridate)
+install.packages("lubridate")
+install.packages("ggplot2")
+
 df <- read.csv("/home/julia/Documents/SI/6 semestre/MQAAE/Rec/Airplane_Crashes_and_Fatalities_Since_1908.csv", header=TRUE,
                  col.names=c("Date", "Time", "Location", "Operator", "Flight #", "Route",
                              "Type", "Registration", "cn/In", "Aboard", "Fatalities",
@@ -6,15 +8,14 @@ df <- read.csv("/home/julia/Documents/SI/6 semestre/MQAAE/Rec/Airplane_Crashes_a
 head(df)
 
 
-timeColumn <- df[,c('Time')]
-#timestamp <- paste(timeColumn,":00",sep="")
-timeColumn
+timeColumn <- df[,c('Time')] #seleciona a coluna de horas
+hours <- table(substr(timeColumn, 0, 2)) #seleciona os caracteres correspondentes às horas apenas, sem os minutos
 
-hours <- table(substr(timeColumn, 0, 2))
-hours
-
-all <- c("06","07","08","09","10","11","12","13","14","15","16","17", "18","19","20","21","22","23","00","01","02","03","04","05")
-barplot(hours[all])
+all <- c("00","01","02","03","04","05","06","07","08","09","10","11","12","13","14","15","16","17", "18","19","20","21","22","23")
+barplot(hours[all],
+        main="Acidentes por hora do dia", 
+        xlab="Horas", 
+        ylab="Quantidade")
 
 
 hist(hours, 
